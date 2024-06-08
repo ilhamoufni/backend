@@ -36,7 +36,7 @@ const findDocument = async (req, res) => {
     }
     res.status(200).json({
       message: "Documents retrieved successfully",
-      documents: documents,
+      data: documents,
     });
   } catch (error) {
     console.error(error);

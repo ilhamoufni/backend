@@ -6,12 +6,19 @@ const {
   updateDocument,
   deleteDocument,
 } = require("../controllers/DocumentControllers");
-const { verifyLogin } = require("../middlewares/adminmiddle");
+const verifyJwt = require("../middlewares/verifyJwt");
 
-router.post("/createDocument", verifyLogin, createDocument);
+router.use(verifyJwt);
 
-router.get("/getDocuments", verifyLogin, findDocument);
-router.put("/updateDocument/:id", updateDocument);
-router.delete("/deleteDocument/:id", deleteDocument);
+router.route("/documents").get(findDocument).post(createDocument);
+
+router.put("/documents/:id", updateDocument);
+router.delete("/documents/:id", deleteDocument);
+
+// router.post("/createDocument", verifyLogin, createDocument);
+
+// router.get("/getDocuments", verifyLogin, findDocument);
+// router.put("/updateDocument/:id", updateDocument);
+// router.delete("/deleteDocument/:id", deleteDocument);
 
 module.exports = router;

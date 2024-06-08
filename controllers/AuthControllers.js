@@ -101,7 +101,24 @@ const refreshToken = asyncHandler(async (req, res) => {
   );
 });
 
+const authLogout = asyncHandler(async (req, res) => {
+  const token = req.cookies.refresh_token;
+
+  if (!token) return res.sendStatus(403);
+
+  res.clearCookie("refresh_token", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+
+  res.json({
+    message: "Cookie cleared !",
+  });
+});
+
 module.exports = {
   signIn,
   refreshToken,
+  authLogout,
 };
