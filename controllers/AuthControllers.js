@@ -30,6 +30,7 @@ const signIn = asyncHandler(async (req, res) => {
         email: foundUser.email,
         name: foundUser.name,
       },
+      role: foundUser.role,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -86,6 +87,7 @@ const refreshToken = asyncHandler(async (req, res) => {
             email: foundUser.email,
             name: foundUser.name,
           },
+          role: foundUser.role,
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
