@@ -29,10 +29,30 @@ const createDocument = async (req, res) => {
 };
 
 const findDocument = async (req, res) => {
-
-
   try {
-    const documents = await Document.findAll();
+    // const documents = await Document.findAll();
+    const documents = await Document.findAll({
+      attributes: [
+        "id",
+        "Provinces",
+        "Communes",
+        "Centres",
+        "Intitulededocument",
+        "Responsables",
+        "Collaborateurs",
+        "Bet",
+        "Situation",
+        "Phase",
+        "Observations",
+        "Observations_chef_département",
+        "Pièces_jointes",
+        "createdAt",
+        "updatedAt",
+      ],
+      where: {
+        Situation: "En cours",
+      },
+    });
     if (documents.length === 0) {
       return res.status(404).json({ message: "No documents found" });
     }
