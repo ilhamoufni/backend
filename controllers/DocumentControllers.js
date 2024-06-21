@@ -29,6 +29,8 @@ const createDocument = async (req, res) => {
 };
 
 const findDocument = async (req, res) => {
+
+
   try {
     const documents = await Document.findAll();
     if (documents.length === 0) {

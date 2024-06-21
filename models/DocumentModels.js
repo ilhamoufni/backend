@@ -103,6 +103,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    Phase: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     Obsrevations: {
       type: DataTypes.STRING,
       allowNull: false,

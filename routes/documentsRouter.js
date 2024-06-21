@@ -16,7 +16,6 @@ router.put("/documents/:id", updateDocument);
 router.delete("/documents/:id", deleteDocument);
 
 // router.post("/createDocument", verifyLogin, createDocument);
-
 // router.get("/getDocuments", verifyLogin, findDocument);
 // router.put("/updateDocument/:id", updateDocument);
 // router.delete("/deleteDocument/:id", deleteDocument);
