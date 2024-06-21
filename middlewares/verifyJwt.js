@@ -18,8 +18,9 @@ const verifyJwt = async (req, res, next) => {
       });
     }
 
-
     req.user = decoded.user.email;
+    req.role = decoded.role;
+
 
     next();
   });

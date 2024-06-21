@@ -7,13 +7,27 @@ const {
   deleteDocument,
 } = require("../controllers/DocumentControllers");
 const verifyJwt = require("../middlewares/verifyJwt");
+const verifyRoles = require("../middlewares/verifyRoles");
+const ROLES = require("../utils/constants");
 
 router.use(verifyJwt);
 
-router.route("/documents").get(findDocument).post(createDocument);
+router
+  .route("/documents")
+  .get( verifyRoles(ROLES.admin, ROLES.chef, ROLES.user), findDocument)
+  .post( verifyRoles(ROLES.admin, ROLES.chef, ROLES.user), createDocument);
 
-router.put("/documents/:id", updateDocument);
-router.delete("/documents/:id", deleteDocument);
+
+router.put(
+  "/documents/:id",
+  verifyRoles(ROLES.admin, ROLES.chef),
+  updateDocument,
+);
+router.delete(
+  "/documents/:id",
+  verifyRoles(ROLES.admin, ROLES.chef),
+  deleteDocument,
+);
 
 // router.post("/createDocument", verifyLogin, createDocument);
 // router.get("/getDocuments", verifyLogin, findDocument);
