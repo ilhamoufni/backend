@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { Document } = require("../models/index");
 
 const createDocument = async (req, res) => {
@@ -88,6 +89,45 @@ const updateDocument = async (req, res) => {
   }
 };
 
+const filterDocuments = async (req, res) => {
+  try {
+    const filtersData = req.body;
+
+    if (!filtersData) {
+      return res.status(201).message({
+        data: [],
+      });
+    }
+
+    const documents = await Document.findAll({
+      attributes: [
+        "id",
+        "Provinces",
+        "Communes",
+        "Centres",
+        "Intitulededocument",
+        "Responsables",
+        "Collaborateurs",
+        "Bet",
+        "Situation",
+        "Phase",
+        "Observations",
+        "Observations_chef_département",
+        "Pièces_jointes",
+        "createdAt",
+        "updatedAt",
+      ],
+      where: { ...filtersData },
+    });
+
+    res.json({ data: documents });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something went wrng",
+    });
+  }
+};
+
 const deleteDocument = async (req, res) => {
   try {
     const id = req.params.id;
@@ -111,4 +151,5 @@ module.exports = {
   findDocument,
   updateDocument,
   deleteDocument,
+  filterDocuments,
 };

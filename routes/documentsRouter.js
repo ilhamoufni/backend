@@ -5,6 +5,7 @@ const {
   findDocument,
   updateDocument,
   deleteDocument,
+  filterDocuments,
 } = require("../controllers/DocumentControllers");
 const verifyJwt = require("../middlewares/verifyJwt");
 const verifyRoles = require("../middlewares/verifyRoles");
@@ -14,19 +15,21 @@ router.use(verifyJwt);
 
 router
   .route("/documents")
-  .get( verifyRoles(ROLES.admin, ROLES.chef, ROLES.user), findDocument)
-  .post( verifyRoles(ROLES.admin, ROLES.chef, ROLES.user), createDocument);
-
+  .get(verifyRoles(ROLES.admin, ROLES.chef, ROLES.user), findDocument)
+  .post(verifyRoles(ROLES.admin, ROLES.chef, ROLES.user), createDocument);
 
 router.put(
   "/documents/:id",
   verifyRoles(ROLES.admin, ROLES.chef),
-  updateDocument,
+  updateDocument
 );
+
+router.post("/filter-documents", filterDocuments);
+
 router.delete(
   "/documents/:id",
   verifyRoles(ROLES.admin, ROLES.chef),
-  deleteDocument,
+  deleteDocument
 );
 
 // router.post("/createDocument", verifyLogin, createDocument);
