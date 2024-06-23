@@ -103,6 +103,42 @@ const refreshToken = asyncHandler(async (req, res) => {
   );
 });
 
+const forgetPassword = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email) {
+    return res.status(422).json({
+      message: "Email is requird",
+    });
+  }
+
+  try {
+    const foundUser = await User.findOne({
+      where: { email },
+    });
+
+    if (!foundUser) {
+      return res.status(404).json({
+        message: "No User Found with provider email",
+      });
+    }
+
+    const updatedPassword = foundUser.update({
+      password,
+    });
+
+    if (updatedPassword) {
+      return res.json({
+        message: "Password updated successfully",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong",
+    });
+  }
+});
+
 const authLogout = asyncHandler(async (req, res) => {
   const token = req.cookies.refresh_token;
 
@@ -123,4 +159,5 @@ module.exports = {
   signIn,
   refreshToken,
   authLogout,
+  forgetPassword,
 };
